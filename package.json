@@ -12,6 +12,7 @@
     "url": "https://github.com/GoodSimonVM/chrome-extension-boilerplate-vue-vite.git"
   },
   "scripts": {
+    "prebuild": "ts-node ./build-scripts/make-ext-icons.ts c -i ./src/assets/img/svg/chrome-logo.svg -o ./src/public/ -m width -s 16,32,48,64,128,256",
     "watch": "npm run dev -- --watch",
     "dev": "vite build --mode developmemnt --emptyOutDir",
     "build": "vue-tsc --noEmit && vite build",
@@ -24,9 +25,11 @@
   },
   "devDependencies": {
     "@iconify/json": "^2.1.77",
+    "@resvg/resvg-js": "^2.1.0",
     "@types/bootstrap": "^5.1.12",
     "@types/chrome": "^0.0.193",
     "@types/node": "^18.0.3",
+    "@types/yargs": "^17.0.10",
     "@typescript-eslint/eslint-plugin": "^5.30.6",
     "@typescript-eslint/parser": "^5.30.6",
     "@vite/vitejs-client": "^2.2.10",
@@ -40,6 +43,7 @@
     "eslint-plugin-vue": "^9.2.0",
     "fs-extra": "10.1.0",
     "prettier": "2.7.1",
+    "resvg": "^1.6.4",
     "sass": "1.53.0",
     "ts-node": "10.8.2",
     "typescript": "^4.7.4",
@@ -47,6 +51,7 @@
     "unplugin-vue-components": "^0.21.1",
     "vite": "^3.0.0",
     "vue-eslint-parser": "^9.0.3",
-    "vue-tsc": "^0.38.5"
+    "vue-tsc": "^0.38.5",
+    "yargs": "^17.5.1"
   }
 }
