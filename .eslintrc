@@ -1,4 +1,5 @@
 {
+  "root": true,
   "env": {
     "browser": true,
     "es6": true,
@@ -6,24 +7,48 @@
   },
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended",
+    "plugin:vue/vue3-recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended"
+    "prettier/@typescript-eslint",
+    "plugin:prettier/recommended",
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
-      "jsx": true
+      "jsx": true,
     },
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint"],
+  "plugins": [
+    "prettier",
+    "@typescript-eslint"
+  ],
   "rules": {
-    "react/react-in-jsx-scope": "off"
+    "semi": "off",
+    "@typescript-eslint/semi": [
+      "off"
+    ],
+    "no-unexpected-multiline": "off",
+    "prettier/prettier": [
+      "error"
+    ],
+    "vue/require-default-prop": 0,
+    "vue/html-indent": [
+      "error",
+      2
+    ],
+    "vue/singleline-html-element-content-newline": 0,
+    "vue/component-name-in-template-casing": [
+      "error",
+      "PascalCase"
+    ],
   },
   "globals": {
     "chrome": "readonly"
   },
-  "ignorePatterns": ["watch.js", "dist/**"]
+  "ignorePatterns": [
+    "watch.js",
+    "dist/**"
+  ]
 }

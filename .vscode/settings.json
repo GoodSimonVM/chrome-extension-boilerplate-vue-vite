@@ -1,0 +1,33 @@
+{
+    "json.schemas": [
+        {
+            "fileMatch": [
+                "manifest.json"
+            ],
+            "url": "https://json.schemastore.org/chrome-manifest.json"
+        },
+        {
+            "fileMatch": [
+                ".prettierrc",
+                ".prettierrc.json"
+            ],
+            "url": "https://json.schemastore.org/prettierrc.json"
+        },
+        {
+            "fileMatch": [
+                ".eslintrc",
+                ".eslintrc.json"
+            ],
+            "url": "https://json.schemastore.org/eslintrc.json"
+        }
+    ],
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/node_modules": true
+    }
+}

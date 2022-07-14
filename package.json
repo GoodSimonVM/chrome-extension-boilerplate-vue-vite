@@ -1,43 +1,52 @@
 {
-  "name": "chrome-extension-boilerplate-react-vite",
+  "name": "chrome-extension-boilerplate-vue3-vite",
   "version": "0.0.1",
-  "description": "chrome extension boilerplate",
+  "description": "chrome extension boilerplate with Vite Vue3 TS SASS",
   "license": "MIT",
+  "author": {
+    "name": "GoodSimonVM",
+    "email": "17sep96@gmail.com"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite.git"
+    "url": "https://github.com/GoodSimonVM/chrome-extension-boilerplate-vue-vite.git"
   },
   "scripts": {
-    "build": "tsc --noEmit && vite build",
-    "dev": "nodemon"
+    "watch": "npm run dev -- --watch",
+    "dev": "vite build --mode developmemnt",
+    "build": "vue-tsc --noEmit && vite build",
+    "serve": "vite preview"
   },
   "type": "module",
   "dependencies": {
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "bootstrap": "^5.1.3",
+    "vue": "^3.2.37"
   },
   "devDependencies": {
-    "@types/chrome": "0.0.193",
-    "@types/node": "18.0.3",
-    "@types/react": "18.0.15",
-    "@types/react-dom": "18.0.6",
-    "@typescript-eslint/eslint-plugin": "5.30.5",
-    "@typescript-eslint/parser": "5.30.5",
-    "@vitejs/plugin-react": "1.3.2",
+    "@iconify/json": "^2.1.77",
+    "@types/bootstrap": "^5.1.12",
+    "@types/chrome": "^0.0.193",
+    "@types/node": "^18.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.30.6",
+    "@typescript-eslint/parser": "^5.30.6",
+    "@vite/vitejs-client": "^2.2.10",
+    "@vitejs/plugin-vue": "^3.0.0",
+    "@vue/compiler-sfc": "^3.2.37",
+    "@vue/tsconfig": "^0.1.3",
     "eslint": "8.19.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.25.4",
-    "eslint-plugin-jsx-a11y": "6.6.0",
     "eslint-plugin-prettier": "4.2.1",
-    "eslint-plugin-react": "7.30.1",
-    "eslint-plugin-react-hooks": "4.6.0",
+    "eslint-plugin-vue": "^9.2.0",
     "fs-extra": "10.1.0",
-    "nodemon": "2.0.19",
     "prettier": "2.7.1",
     "sass": "1.53.0",
-    "ts-loader": "9.3.1",
     "ts-node": "10.8.2",
-    "typescript": "4.7.4",
-    "vite": "2.9.14"
+    "typescript": "^4.7.4",
+    "unplugin-icons": "^0.14.7",
+    "unplugin-vue-components": "^0.21.1",
+    "vite": "^3.0.0",
+    "vue-eslint-parser": "^9.0.3",
+    "vue-tsc": "^0.38.5"
   }
 }

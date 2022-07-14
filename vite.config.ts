@@ -1,7 +1,12 @@
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
 import { resolve } from "path";
-import makeManifest from "./utils/plugins/make-manifest";
+import { promises as fs } from "fs";
+import makeManifest from "@utils/plugins/make-manifest";
+import vue from "@vitejs/plugin-vue";
+import Components from "unplugin-vue-components/vite";
+import Icons from "unplugin-icons/vite";
+import ViteIconsResolver from "unplugin-icons/resolver";
+import manifest from "@src/manifest";
 
 const root = resolve(__dirname, "src");
 const pagesDir = resolve(root, "pages");
@@ -17,7 +22,40 @@ export default defineConfig({
       "@pages": pagesDir,
     },
   },
-  plugins: [react(), makeManifest()],
+  plugins: [
+    vue(),
+    Components({
+      dts: true,
+      extensions: ["vue"],
+      include: [/\.vue$/],
+      resolvers: [
+        (name) => {
+          if (name === "MyCustom")
+            return resolve(__dirname, "src/CustomResolved.vue").replace(
+              /\\\\/g,
+              "/"
+            );
+        },
+        // https://github.com/antfu/vite-plugin-icons
+        ViteIconsResolver({
+          customCollections: ["custom"],
+          enabledCollections: ["bi", "bx"],
+        }),
+      ],
+    }),
+    Icons({
+      autoInstall: true,
+      customCollections: {
+        custom: {
+          logo: () => fs.readFile("assets/icons/svg/logo.svg", "utf-8"),
+        },
+      },
+    }),
+    makeManifest({
+      manifest: manifest,
+      outputDir: publicDir,
+    }),
+  ],
   publicDir,
   build: {
     outDir,
