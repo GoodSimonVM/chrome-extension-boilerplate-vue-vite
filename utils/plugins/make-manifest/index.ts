@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-import colorLog from "@utils/color-log";
+import colorLog from "../../color-log";
 import type { PluginOption } from "vite";
 import type { ManifestType } from "./manifest-type";
 

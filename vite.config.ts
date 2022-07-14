@@ -1,18 +1,30 @@
 import { defineConfig } from "vite";
 import { resolve } from "path";
-import { promises as fs } from "fs";
-import makeManifest from "@utils/plugins/make-manifest";
 import vue from "@vitejs/plugin-vue";
 import Components from "unplugin-vue-components/vite";
 import Icons from "unplugin-icons/vite";
 import ViteIconsResolver from "unplugin-icons/resolver";
-import manifest from "@src/manifest";
+
+import makeManifest from "./utils/plugins/make-manifest/index";
+import { getCustomCollection } from "./utils/make-custom-icons-collection";
+
+import manifest from "./src/manifest";
 
 const root = resolve(__dirname, "src");
 const pagesDir = resolve(root, "pages");
 const assetsDir = resolve(root, "assets");
 const outDir = resolve(__dirname, "dist");
 const publicDir = resolve(__dirname, "public");
+// const utilsDir = resolve(__dirname, "utils")
+
+const customIconFileNames: string[] = [
+  "img/svg/chrome-logo.svg",
+  "img/svg/vue-logo.svg",
+];
+const customIcons = getCustomCollection({
+  pathToAssetsDir: assetsDir,
+  iconFilePaths: customIconFileNames,
+});
 
 export default defineConfig({
   resolve: {
@@ -20,6 +32,7 @@ export default defineConfig({
       "@src": root,
       "@assets": assetsDir,
       "@pages": pagesDir,
+      // "@utils": utilsDir,
     },
   },
   plugins: [
@@ -29,13 +42,6 @@ export default defineConfig({
       extensions: ["vue"],
       include: [/\.vue$/],
       resolvers: [
-        (name) => {
-          if (name === "MyCustom")
-            return resolve(__dirname, "src/CustomResolved.vue").replace(
-              /\\\\/g,
-              "/"
-            );
-        },
         // https://github.com/antfu/vite-plugin-icons
         ViteIconsResolver({
           customCollections: ["custom"],
@@ -46,9 +52,7 @@ export default defineConfig({
     Icons({
       autoInstall: true,
       customCollections: {
-        custom: {
-          logo: () => fs.readFile("assets/icons/svg/logo.svg", "utf-8"),
-        },
+        custom: customIcons,
       },
     }),
     makeManifest({
@@ -57,11 +61,12 @@ export default defineConfig({
     }),
   ],
   publicDir,
-  build: {
+  root,
+  build: {    
     outDir,
     sourcemap: process.env.__DEV__ === "true",
     rollupOptions: {
-      input: {
+      input: {        
         devtools: resolve(pagesDir, "devtools", "index.html"),
         panel: resolve(pagesDir, "panel", "index.html"),
         content: resolve(pagesDir, "content", "index.ts"),
@@ -70,8 +75,8 @@ export default defineConfig({
         newtab: resolve(pagesDir, "newtab", "index.html"),
         options: resolve(pagesDir, "options", "index.html"),
       },
-      output: {
-        entryFileNames: "src/pages/[name]/index.js",
+      output: {        
+        entryFileNames: "pages/[name]/index.js",
         chunkFileNames: "assets/js/[name].[hash].js",
         assetFileNames: "assets/[ext]/[name].chunk.[ext]",
       },

@@ -1,19 +1,19 @@
 import packageJson from "../package.json";
-import type { ManifestType } from "@utils/plugins/make-manifest";
+import type { ManifestType } from "utils/plugins/make-manifest";
 
 const manifest: ManifestType = {
   manifest_version: 3,
   name: packageJson.name,
   version: packageJson.version,
   description: packageJson.description,
-  options_page: "src/pages/options/index.html",
-  background: { service_worker: "src/pages/background/index.js" },
+  options_page: "pages/options/index.html",
+  background: { service_worker: "pages/background/index.js" },
   action: {
-    default_popup: "src/pages/popup/index.html",
-    default_icon: "icon-34.png",
+    default_popup: "pages/popup/index.html",
+    default_icon: { "34": "icon-34.png" },
   },
   chrome_url_overrides: {
-    newtab: "src/pages/newtab/index.html",
+    newtab: "pages/newtab/index.html",
   },
   icons: {
     "128": "icon-128.png",
@@ -21,11 +21,11 @@ const manifest: ManifestType = {
   content_scripts: [
     {
       matches: ["http://*/*", "https://*/*", "<all_urls>"],
-      js: ["src/pages/content/index.js"],
-      css: ["assets/css/content.chunk.css"],
+      js: ["pages/content/index.js"],
+      // css: ["assets/css/content.chunk.css"],
     },
   ],
-  devtools_page: "src/pages/devtools/index.html",
+  devtools_page: "pages/devtools/index.html",
   web_accessible_resources: [
     {
       resources: [

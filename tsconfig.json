@@ -1,12 +1,7 @@
 {
   "extends": "@vue/tsconfig/tsconfig.json",
   "compilerOptions": {
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ES2016",
-      "ES2021.String"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "alwaysStrict": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
@@ -14,26 +9,17 @@
     "noEmit": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "/*"
-      ],
-      "@src/*": [
-        "src/*"
-      ],
-      "@assets/*": [
-        "src/assets/*"
-      ],
-      "@pages/*": [
-        "src/pages/*"
-      ],
-      "@utils/*": [
-        "utils/*"
-      ]
-    }
+      "@/*": ["/*"],
+      "@src/*": ["src/*"],
+      "@assets/*": ["src/assets/*"],
+      "@pages/*": ["src/pages/*"]
+      // "@utils/*": ["./utils/*"]
+    },
+    "types": [
+      "@types/chrome"
+    ]
   },
-  "include": [
-    "src",
-    "utils",
-    "vite.config.ts"
-  ]
+  
+  "include": ["src", "utils", "vite.config.ts"]
+  // "exclude": ["node_modules"]
 }
