@@ -1,11 +1,6 @@
 import "@assets/style/style.scss";
 import { createApp } from "vue";
 import App from "@pages/content/Content.vue";
-// /**
-//  * @description
-//  * Chrome extensions don't support modules in content scripts.
-//  */
-// import("@pages/content/Content.vue");
 
 const MOUNT_EL_ID = generateMountElementId();
 
