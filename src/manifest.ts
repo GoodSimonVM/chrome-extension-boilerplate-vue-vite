@@ -22,7 +22,6 @@ const manifest: ManifestType = {
     {
       matches: ["http://*/*", "https://*/*", "<all_urls>"],
       js: ["pages/content/index.js"],
-      // css: ["assets/css/content.chunk.css"],
     },
   ],
   devtools_page: "pages/devtools/index.html",
