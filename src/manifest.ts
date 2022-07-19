@@ -1,5 +1,38 @@
+import { resolve, relative } from "path";
+import { convertSvg } from "../utils/svg2png/convert";
 import packageJson from "../package.json";
-import type { ManifestType } from "utils/plugins/make-manifest";
+import { assetsDir, publicDir } from "./constants";
+import type { ManifestType } from "../utils/plugins/make-manifest";
+
+const pathToLogoSvg = resolve(assetsDir, "img", "ext-logo.svg");
+
+const publicAssetsDir = resolve(publicDir, "assets");
+
+const extLogoIconConversionResult = convertSvg({
+  input: {
+    svgFilePath: pathToLogoSvg,
+  },
+  output: {
+    dirPath: publicAssetsDir,
+    fitOptions: [
+      { mode: "width", value: 16 },
+      { mode: "width", value: 32 },
+      { mode: "width", value: 48 },
+      { mode: "width", value: 64 },
+      { mode: "width", value: 128 },
+      { mode: "width", value: 256 },
+    ],
+  },
+  force: false,
+  useHash: true,
+  addOutputToDirWithInputName: true,
+});
+
+const extLogoIcon = Object.keys(extLogoIconConversionResult)
+  .map((key) => ({
+    [key.slice(2)]: relative(__dirname, extLogoIconConversionResult[key]),
+  }))
+  .reduce((prev, current) => ({ ...prev, ...current }), {});
 
 const manifest: ManifestType = {
   manifest_version: 3,
@@ -10,7 +43,7 @@ const manifest: ManifestType = {
   background: { service_worker: "pages/background/index.js" },
   action: {
     default_popup: "pages/popup/index.html",
-    default_icon: { "34": "icon-34.png" },
+    default_icon: extLogoIcon,
   },
   chrome_url_overrides: {
     newtab: "pages/newtab/index.html",
