@@ -1,26 +1,21 @@
 import { defineConfig } from "vite";
-import { resolve } from "path";
+import { resolve, parse } from "path";
 import vue from "@vitejs/plugin-vue";
 import Components from "unplugin-vue-components/vite";
 import Icons from "unplugin-icons/vite";
 import ViteIconsResolver from "unplugin-icons/resolver";
 
-import makeManifest from "./utils/plugins/make-manifest/index";
+import makeManifest from "./utils/plugins/make-manifest";
 import { getCustomCollection } from "./utils/make-custom-icons-collection";
 
 import manifest from "./src/manifest";
-
-const root = resolve(__dirname, "src");
-const pagesDir = resolve(root, "pages");
-const assetsDir = resolve(root, "assets");
-const outDir = resolve(__dirname, "dist");
-const publicDir = resolve(__dirname, "public");
-// const utilsDir = resolve(__dirname, "utils")
+import { assetsDir, outDir, pagesDir, publicDir, root } from "./src/constants";
 
 const customIconFileNames: string[] = [
-  "img/svg/chrome-logo.svg",
+  "img/ext-logo.svg",
   "img/svg/vue-logo.svg",
 ];
+
 const customIcons = getCustomCollection({
   pathToAssetsDir: assetsDir,
   iconFilePaths: customIconFileNames,
@@ -32,7 +27,6 @@ export default defineConfig({
       "@src": root,
       "@assets": assetsDir,
       "@pages": pagesDir,
-      // "@utils": utilsDir,
     },
   },
   plugins: [
@@ -62,25 +56,26 @@ export default defineConfig({
   ],
   publicDir,
   root,
-  build: {    
+  build: {
+    emptyOutDir: true,
     outDir,
     sourcemap: process.env.__DEV__ === "true",
     rollupOptions: {
-      input: {        
+      input: {
         devtools: resolve(pagesDir, "devtools", "index.html"),
         panel: resolve(pagesDir, "panel", "index.html"),
         content: resolve(pagesDir, "content", "index.ts"),
         background: resolve(pagesDir, "background", "index.ts"),
-        contentStyle: resolve(pagesDir, "content", "style.scss"),
         popup: resolve(pagesDir, "popup", "index.html"),
         newtab: resolve(pagesDir, "newtab", "index.html"),
         options: resolve(pagesDir, "options", "index.html"),
       },
-      output: {        
+      output: {
         entryFileNames: "pages/[name]/index.js",
         chunkFileNames: "assets/js/[name].[hash].js",
         assetFileNames: (assetInfo) => {
-          const { dir, name: _name } = path.parse(assetInfo.name);
+          if (!assetInfo.name) throw "no asset name";
+          const { dir, name: _name } = parse(assetInfo.name);
           const assetFolder = getLastElement(dir.split("/"));
           const name = assetFolder + firstUpperCase(_name);
           return `assets/[ext]/${name}.chunk.[ext]`;
