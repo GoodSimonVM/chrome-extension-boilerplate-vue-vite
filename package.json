@@ -13,7 +13,7 @@
   },
   "scripts": {
     "watch": "npm run dev -- --watch",
-    "dev": "vite build --mode development",
+    "dev": "nodemon",
     "build": "vue-tsc --noEmit && vite build",
     "serve": "vite preview"
   },
